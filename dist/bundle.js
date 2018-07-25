@@ -20011,10 +20011,23 @@ var _key2 = _interopRequireDefault(_key);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App() {
+  var starterBinds = ['q', 'w', 'e', 'a', 's', 'd', 'z', 'x', 'c'];
+  var sounds = ['kick', 'snare', 'tom1', 'tom2', 'clhat', 'ophat', 'symbol', 'clap', 'fx'];
+
+  var keys = sounds.map(function (sound, i) {
+    var soundString = sound + '-0';
+    return _react2.default.createElement(_key2.default, {
+      key: i,
+      name: sound,
+      keyTag: starterBinds[i],
+      sound: soundString
+    });
+  });
+
   return _react2.default.createElement(
     'div',
-    { 'class': 'app' },
-    _react2.default.createElement(_key2.default, null)
+    { className: 'app' },
+    keys
   );
 };
 
@@ -20066,20 +20079,15 @@ var Key = function (_React$Component) {
       };
     };
 
-    _this.source = function () {
-      return 'sounds/' + _this.state.sound + '.wav';
-    };
-
     _this.handleKeyDown = function (event) {
-      debugger;
-      if (event.key === _this.state.key) {
+      if (event.key === _this.state.keyTag) {
         _this.play();
       }
     };
 
     _this.play = function () {
-      _this.audio.currentTime = 0;
-      _this.audio.play();
+      _this.audio.current.currentTime = 0;
+      _this.audio.current.play();
       _this.setState({ classes: 'playing' });
     };
 
@@ -20088,42 +20096,43 @@ var Key = function (_React$Component) {
     };
 
     _this.state = {
-      key: _this.props.key,
+      keyTag: _this.props.keyTag,
       sound: _this.props.sound,
       classes: ''
     };
     _this.audio = _react2.default.createRef();
+    _this.handleKeyDown = _this.handleKeyDown.bind(_this);
     return _this;
   }
 
   _createClass(Key, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      window.addEventListener('keydown', this.handleKeyDown);
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var audioSrc = 'sounds/' + this.state.sound + '.wav';
 
       return _react2.default.createElement(
         'div',
         {
-          'class': "key" + this.state.classes,
+          className: "key" + ' ' + this.state.classes,
           onClick: this.revealOptions,
-          onKeyDown: this.handleKeyDown,
           onTransitionEnd: this.removeClass
         },
         _react2.default.createElement(
           'kbd',
           null,
-          this.state.key
+          this.state.keyTag
         ),
         _react2.default.createElement(
           'span',
-          { 'class': 'sound' },
-          this.state.sound
+          { className: 'sound' },
+          this.props.name
         ),
-        _react2.default.createElement('audio', { ref: this.audio, src: this.source }),
-        _react2.default.createElement(KeyOptions, {
-          sound: this.props.sound,
-          changeKey: this.change('key'),
-          changeSound: this.change('sound')
-        })
+        _react2.default.createElement('audio', { ref: this.audio, src: audioSrc })
       );
     }
   }]);

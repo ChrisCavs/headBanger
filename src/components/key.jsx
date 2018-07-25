@@ -4,31 +4,31 @@ class Key extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      key: this.props.key,
+      keyTag: this.props.keyTag,
       sound: this.props.sound,
       classes: ''
     }
     this.audio = React.createRef()
+    this.handleKeyDown = this.handleKeyDown.bind(this)
   }
 
   change = name => val => {
     this.setState({ [name]: val })
   }
-
-  source = () => {
-    return `sounds/${this.state.sound}.wav`
-  }
   
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyDown)
+  }
+
   handleKeyDown = event => {
-    debugger
-    if (event.key === this.state.key) {
+    if (event.key === this.state.keyTag) {
       this.play()
     }
   }
 
   play = () => {
-    this.audio.currentTime = 0
-    this.audio.play()
+    this.audio.current.currentTime = 0
+    this.audio.current.play()
     this.setState({ classes: 'playing' })
   }
 
@@ -37,23 +37,17 @@ class Key extends React.Component {
   }
   
   render () {
+    const audioSrc = `sounds/${this.state.sound}.wav`
 
     return (
       <div 
-        class={"key" + this.state.classes}
+        className={"key" + ' ' + this.state.classes}
         onClick={this.revealOptions}
-        onKeyDown={this.handleKeyDown}
         onTransitionEnd={this.removeClass}
       >
-        <kbd>{this.state.key}</kbd>
-        <span class="sound">{this.state.sound}</span>
-        <audio ref={this.audio} src={this.source} />
-
-        <KeyOptions
-          sound={this.props.sound}
-          changeKey={this.change('key')}
-          changeSound={this.change('sound')} 
-        />
+        <kbd>{this.state.keyTag}</kbd>
+        <span className="sound">{this.props.name}</span>
+        <audio ref={this.audio} src={audioSrc} />
       </div>
     )
   }
