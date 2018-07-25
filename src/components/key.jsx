@@ -1,16 +1,13 @@
 import React from 'react'
 
 class Key extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      keyTag: this.props.keyTag,
-      sound: this.props.sound,
-      classes: ''
-    }
-    this.audio = React.createRef()
-    this.handleKeyDown = this.handleKeyDown.bind(this)
+  state = {
+    keyTag: this.props.keyTag,
+    sound: this.props.sound,
+    classes: ''
   }
+
+  audio = React.createRef()
 
   change = name => val => {
     this.setState({ [name]: val })
@@ -19,16 +16,17 @@ class Key extends React.Component {
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown)
   }
-
+  
   handleKeyDown = event => {
     if (event.key === this.state.keyTag) {
       this.play()
     }
   }
-
+  
   play = () => {
     this.audio.current.currentTime = 0
     this.audio.current.play()
+
     this.setState({ classes: 'playing' })
   }
 
@@ -47,7 +45,10 @@ class Key extends React.Component {
       >
         <kbd>{this.state.keyTag}</kbd>
         <span className="sound">{this.props.name}</span>
-        <audio ref={this.audio} src={audioSrc} />
+        <audio 
+          ref={this.audio} 
+          src={audioSrc}
+        />
       </div>
     )
   }

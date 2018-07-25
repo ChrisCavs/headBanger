@@ -20008,11 +20008,15 @@ var _key = __webpack_require__(/*! ./components/key */ "./src/components/key.jsx
 
 var _key2 = _interopRequireDefault(_key);
 
+var _canvas = __webpack_require__(/*! ./components/canvas */ "./src/components/canvas.jsx");
+
+var _canvas2 = _interopRequireDefault(_canvas);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App() {
   var starterBinds = ['q', 'w', 'e', 'a', 's', 'd', 'z', 'x', 'c'];
-  var sounds = ['kick', 'snare', 'tom1', 'tom2', 'clhat', 'ophat', 'symbol', 'clap', 'fx'];
+  var sounds = ['kick', 'snare', 'tom1', 'tom2', 'hi-hat', 'open-hat', 'symbol', 'clap', 'fx'];
 
   var keys = sounds.map(function (sound, i) {
     var soundString = sound + '-0';
@@ -20027,11 +20031,74 @@ var App = function App() {
   return _react2.default.createElement(
     'div',
     { className: 'app' },
+    _react2.default.createElement(_canvas2.default, null),
     keys
   );
 };
 
 exports.default = App;
+
+/***/ }),
+
+/***/ "./src/components/canvas.jsx":
+/*!***********************************!*\
+  !*** ./src/components/canvas.jsx ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Canvas = function (_React$Component) {
+  _inherits(Canvas, _React$Component);
+
+  function Canvas(props) {
+    _classCallCheck(this, Canvas);
+
+    var _this = _possibleConstructorReturn(this, (Canvas.__proto__ || Object.getPrototypeOf(Canvas)).call(this, props));
+
+    _this.animate = function (e) {};
+
+    _this.canvas = _react2.default.createRef();
+    return _this;
+  }
+
+  _createClass(Canvas, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.context = this.canvas.current;
+      window.addEventListener('keydown', this.animate);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement('canvas', { ref: this.canvas, className: 'canvas' });
+    }
+  }]);
+
+  return Canvas;
+}(_react2.default.Component);
+
+exports.default = Canvas;
 
 /***/ }),
 
@@ -20068,41 +20135,37 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Key = function (_React$Component) {
   _inherits(Key, _React$Component);
 
-  function Key(props) {
+  function Key() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, Key);
 
-    var _this = _possibleConstructorReturn(this, (Key.__proto__ || Object.getPrototypeOf(Key)).call(this, props));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-    _this.change = function (name) {
-      return function (val) {
-        _this.setState(_defineProperty({}, name, val));
-      };
-    };
-
-    _this.handleKeyDown = function (event) {
-      if (event.key === _this.state.keyTag) {
-        _this.play();
-      }
-    };
-
-    _this.play = function () {
-      _this.audio.current.currentTime = 0;
-      _this.audio.current.play();
-      _this.setState({ classes: 'playing' });
-    };
-
-    _this.removeClass = function () {
-      _this.setState({ classes: '' });
-    };
-
-    _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Key.__proto__ || Object.getPrototypeOf(Key)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       keyTag: _this.props.keyTag,
       sound: _this.props.sound,
       classes: ''
-    };
-    _this.audio = _react2.default.createRef();
-    _this.handleKeyDown = _this.handleKeyDown.bind(_this);
-    return _this;
+    }, _this.audio = _react2.default.createRef(), _this.change = function (name) {
+      return function (val) {
+        _this.setState(_defineProperty({}, name, val));
+      };
+    }, _this.handleKeyDown = function (event) {
+      if (event.key === _this.state.keyTag) {
+        _this.play();
+      }
+    }, _this.play = function () {
+      _this.audio.current.currentTime = 0;
+      _this.audio.current.play();
+
+      _this.setState({ classes: 'playing' });
+    }, _this.removeClass = function () {
+      _this.setState({ classes: '' });
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Key, [{
@@ -20132,7 +20195,10 @@ var Key = function (_React$Component) {
           { className: 'sound' },
           this.props.name
         ),
-        _react2.default.createElement('audio', { ref: this.audio, src: audioSrc })
+        _react2.default.createElement('audio', {
+          ref: this.audio,
+          src: audioSrc
+        })
       );
     }
   }]);
