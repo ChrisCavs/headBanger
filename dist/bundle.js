@@ -20040,6 +20040,57 @@ exports.default = App;
 
 /***/ }),
 
+/***/ "./src/components/bind_option.jsx":
+/*!****************************************!*\
+  !*** ./src/components/bind_option.jsx ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var BindOption = function (_React$Component) {
+  _inherits(BindOption, _React$Component);
+
+  function BindOption() {
+    _classCallCheck(this, BindOption);
+
+    return _possibleConstructorReturn(this, (BindOption.__proto__ || Object.getPrototypeOf(BindOption)).apply(this, arguments));
+  }
+
+  _createClass(BindOption, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement("div", { className: "bind-option" });
+    }
+  }]);
+
+  return BindOption;
+}(_react2.default.Component);
+
+exports.default = BindOption;
+
+/***/ }),
+
 /***/ "./src/components/canvas.jsx":
 /*!***********************************!*\
   !*** ./src/components/canvas.jsx ***!
@@ -20122,6 +20173,10 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _key_options = __webpack_require__(/*! ./key_options */ "./src/components/key_options.jsx");
+
+var _key_options2 = _interopRequireDefault(_key_options);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -20149,6 +20204,7 @@ var Key = function (_React$Component) {
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Key.__proto__ || Object.getPrototypeOf(Key)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       keyTag: _this.props.keyTag,
       sound: _this.props.sound,
+      optionClasses: '',
       classes: ''
     }, _this.audio = _react2.default.createRef(), _this.change = function (name) {
       return function (val) {
@@ -20163,6 +20219,11 @@ var Key = function (_React$Component) {
       _this.audio.current.play();
 
       _this.setState({ classes: 'playing' });
+    }, _this.revealOptions = function () {
+      _this.setState({ optionClasses: 'reveal' });
+      window.onClick = _this.hideOptions;
+    }, _this.hideOptions = function () {
+      _this.setState({ optionClasses: '' });
     }, _this.removeClass = function () {
       _this.setState({ classes: '' });
     }, _temp), _possibleConstructorReturn(_this, _ret);
@@ -20198,7 +20259,10 @@ var Key = function (_React$Component) {
         _react2.default.createElement('audio', {
           ref: this.audio,
           src: audioSrc
-        })
+        }),
+        _react2.default.createElement(_key_options2.default, {
+          classes: this.state.options,
+          change: this.change })
       );
     }
   }]);
@@ -20207,6 +20271,146 @@ var Key = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Key;
+
+/***/ }),
+
+/***/ "./src/components/key_options.jsx":
+/*!****************************************!*\
+  !*** ./src/components/key_options.jsx ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _bind_option = __webpack_require__(/*! ./bind_option */ "./src/components/bind_option.jsx");
+
+var _bind_option2 = _interopRequireDefault(_bind_option);
+
+var _sound_option = __webpack_require__(/*! ./sound_option */ "./src/components/sound_option.jsx");
+
+var _sound_option2 = _interopRequireDefault(_sound_option);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var KeyOptions = function (_React$Component) {
+  _inherits(KeyOptions, _React$Component);
+
+  function KeyOptions() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, KeyOptions);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = KeyOptions.__proto__ || Object.getPrototypeOf(KeyOptions)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      reveal: 'sound'
+    }, _this.switch = function (name) {
+      return function () {
+        _this.setState({ reveal: name });
+      };
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(KeyOptions, [{
+    key: 'render',
+    value: function render() {
+      var option = _react2.default.createElement(_sound_option2.default, { change: this.props.change });
+      var click = this.switch('bind');
+
+      if (this.state.reveal === 'bind') {
+        option = _react2.default.createElement(_bind_option2.default, { change: this.props.change });
+        click = this.switch('sound');
+      }
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'key-options ' + this.props.classes },
+        option,
+        _react2.default.createElement('button', {
+          className: 'option-switch',
+          onClick: click
+        })
+      );
+    }
+  }]);
+
+  return KeyOptions;
+}(_react2.default.Component);
+
+exports.default = KeyOptions;
+
+/***/ }),
+
+/***/ "./src/components/sound_option.jsx":
+/*!*****************************************!*\
+  !*** ./src/components/sound_option.jsx ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SoundOption = function (_React$Component) {
+  _inherits(SoundOption, _React$Component);
+
+  function SoundOption() {
+    _classCallCheck(this, SoundOption);
+
+    return _possibleConstructorReturn(this, (SoundOption.__proto__ || Object.getPrototypeOf(SoundOption)).apply(this, arguments));
+  }
+
+  _createClass(SoundOption, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement("div", { className: "sound-option" });
+    }
+  }]);
+
+  return SoundOption;
+}(_react2.default.Component);
+
+exports.default = SoundOption;
 
 /***/ }),
 

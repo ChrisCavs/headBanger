@@ -1,9 +1,11 @@
 import React from 'react'
+import KeyOptions from './key_options'
 
 class Key extends React.Component {
   state = {
     keyTag: this.props.keyTag,
     sound: this.props.sound,
+    optionClasses: '',
     classes: ''
   }
 
@@ -30,6 +32,15 @@ class Key extends React.Component {
     this.setState({ classes: 'playing' })
   }
 
+  revealOptions = () => {
+    this.setState({ optionClasses: 'reveal' })
+    window.onClick = this.hideOptions
+  }
+
+  hideOptions = () => {
+    this.setState({ optionClasses: '' })
+  }
+
   removeClass = () => {
     this.setState({ classes: '' })
   }
@@ -49,6 +60,10 @@ class Key extends React.Component {
           ref={this.audio} 
           src={audioSrc}
         />
+
+        <KeyOptions
+          classes={this.state.options}
+          change={this.change} />
       </div>
     )
   }
