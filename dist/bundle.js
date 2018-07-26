@@ -20138,6 +20138,7 @@ var Canvas = function (_React$Component) {
     value: function componentDidMount() {
       this.context = this.canvas.current;
       window.addEventListener('keydown', this.animate);
+      window.canvas = this.canvas.current;
     }
   }, {
     key: 'render',
@@ -20204,7 +20205,7 @@ var Key = function (_React$Component) {
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Key.__proto__ || Object.getPrototypeOf(Key)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       keyTag: _this.props.keyTag,
       sound: _this.props.sound,
-      optionClasses: '',
+      hide: true,
       classes: ''
     }, _this.audio = _react2.default.createRef(), _this.change = function (name) {
       return function (val) {
@@ -20220,10 +20221,16 @@ var Key = function (_React$Component) {
 
       _this.setState({ classes: 'playing' });
     }, _this.revealOptions = function () {
-      _this.setState({ optionClasses: 'reveal' });
-      window.onClick = _this.hideOptions;
+      _this.setState({ hide: false });
     }, _this.hideOptions = function () {
-      _this.setState({ optionClasses: '' });
+      _this.setState({ hide: true });
+    }, _this.toggleOptions = function () {
+      if (_this.state.hide) {
+        _this.revealOptions();
+        return;
+      }
+
+      _this.hideOptions();
     }, _this.removeClass = function () {
       _this.setState({ classes: '' });
     }, _temp), _possibleConstructorReturn(_this, _ret);
@@ -20243,7 +20250,7 @@ var Key = function (_React$Component) {
         'div',
         {
           className: "key" + ' ' + this.state.classes,
-          onClick: this.revealOptions,
+          onClick: this.toggleOptions,
           onTransitionEnd: this.removeClass
         },
         _react2.default.createElement(
@@ -20261,7 +20268,8 @@ var Key = function (_React$Component) {
           src: audioSrc
         }),
         _react2.default.createElement(_key_options2.default, {
-          classes: this.state.options,
+          hide: this.state.hide,
+          hideOptions: this.hideOptions,
           change: this.change })
       );
     }
@@ -20336,22 +20344,40 @@ var KeyOptions = function (_React$Component) {
   _createClass(KeyOptions, [{
     key: 'render',
     value: function render() {
+      if (this.props.hide) {
+        return _react2.default.createElement('div', null);
+      }
+
       var option = _react2.default.createElement(_sound_option2.default, { change: this.props.change });
       var click = this.switch('bind');
+      var text = 'bind-settings';
 
       if (this.state.reveal === 'bind') {
         option = _react2.default.createElement(_bind_option2.default, { change: this.props.change });
         click = this.switch('sound');
+        text = 'sound-settings';
       }
 
       return _react2.default.createElement(
         'div',
-        { className: 'key-options ' + this.props.classes },
+        { className: 'key-options' },
+        _react2.default.createElement(
+          'button',
+          {
+            className: 'option-close',
+            onClick: this.props.hideOptions
+          },
+          'x'
+        ),
         option,
-        _react2.default.createElement('button', {
-          className: 'option-switch',
-          onClick: click
-        })
+        _react2.default.createElement(
+          'button',
+          {
+            className: 'option-switch',
+            onClick: click
+          },
+          text
+        )
       );
     }
   }]);

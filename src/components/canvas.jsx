@@ -10,6 +10,7 @@ class Canvas extends React.Component {
   componentDidMount () {
     this.context = this.canvas.current
     window.addEventListener('keydown', this.animate)
+    window.canvas = this.canvas.current
   }
 
   animate = (e) => {

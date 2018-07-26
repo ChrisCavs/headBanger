@@ -5,7 +5,7 @@ class Key extends React.Component {
   state = {
     keyTag: this.props.keyTag,
     sound: this.props.sound,
-    optionClasses: '',
+    hide: true,
     classes: ''
   }
 
@@ -33,12 +33,20 @@ class Key extends React.Component {
   }
 
   revealOptions = () => {
-    this.setState({ optionClasses: 'reveal' })
-    window.onClick = this.hideOptions
+    this.setState({ hide: false })
   }
 
   hideOptions = () => {
-    this.setState({ optionClasses: '' })
+    this.setState({ hide: true })
+  }
+
+  toggleOptions = () => {
+    if (this.state.hide) {
+      this.revealOptions()
+      return
+    }
+
+    this.hideOptions()
   }
 
   removeClass = () => {
@@ -51,7 +59,7 @@ class Key extends React.Component {
     return (
       <div 
         className={"key" + ' ' + this.state.classes}
-        onClick={this.revealOptions}
+        onClick={this.toggleOptions}
         onTransitionEnd={this.removeClass}
       >
         <kbd>{this.state.keyTag}</kbd>
@@ -62,7 +70,8 @@ class Key extends React.Component {
         />
 
         <KeyOptions
-          classes={this.state.options}
+          hide={this.state.hide}
+          hideOptions={this.hideOptions}
           change={this.change} />
       </div>
     )
