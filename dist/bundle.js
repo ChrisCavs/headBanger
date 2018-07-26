@@ -20073,7 +20073,6 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'app' },
-        _react2.default.createElement(_canvas2.default, null),
         keys
       );
     }
@@ -20199,12 +20198,13 @@ var BindOption = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.props.toggleKeyListeners();
-      window.onkeydown = this.makeSelection;
+      window.addEventListener('keydown', this.makeSelection.bind(this));
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       this.props.toggleKeyListeners();
+      window.removeEventListener('keydown', this.makeSelection.bind(this));
     }
   }, {
     key: 'render',
@@ -20276,59 +20276,64 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Canvas = function (_React$Component) {
   _inherits(Canvas, _React$Component);
 
-  function Canvas(props) {
+  function Canvas() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, Canvas);
 
-    var _this = _possibleConstructorReturn(this, (Canvas.__proto__ || Object.getPrototypeOf(Canvas)).call(this, props));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-    _this.create = function (width, height) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Canvas.__proto__ || Object.getPrototypeOf(Canvas)).call.apply(_ref, [this].concat(args))), _this), _this.canvas = _react2.default.createRef(), _this.create = function (width, height) {
 
       // radius between 2 and 6
-      var radius = 2 + Math.random() * 3;
+      var radius = 3 + Math.random() * 8;
 
-      // velocities
-      var vx = -5 + Math.random() * 10;
-      var vy = -5 + Math.random() * 10;
+      var vx = -5 + Math.random() * 15;
+      var vy = -5 + Math.random() * 15;
 
-      // colors
       var r = Math.round(Math.random()) * 255;
       var g = Math.round(Math.random()) * 255;
       var b = Math.round(Math.random()) * 255;
-      var rgba = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.5)';
+      var rgba = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.4)';
 
-      return new _circle2.default(_this.canvas, _this.context, [width, height], [vx, vy], rgba, radius);
-    };
+      return new _circle2.default(_this.canvas.current, _this.context, [width, height], [vx, vy], rgba, radius);
+    }, _this.createAnimation = function (event) {
+      _this.beginAnimation();
+    }, _this.beginAnimation = function (event) {
+      var width = (window.innerWidth - 300) * Math.random();
+      var height = (window.innerHeight - 300) * Math.random();
 
-    _this.beginAnimation = function (event) {
-      var width = window.innerWidth * Math.random();
-      var height = window.innerHeight * Math.random();
-
-      var circles = [];
-      for (var i = 0; i < 50; i++) {
-        circles.push(_this.create(width, height));
+      if (!_this.circles) {
+        _this.circles = [];
       }
 
-      _this.animate(circles);
-    };
+      for (var i = 0; i < 40; i++) {
+        _this.circles.push(_this.create(width, height));
+      }
 
-    _this.animate = function (circles) {
-      var newCircles = [];
+      _this.animate(_this.circles)();
+    }, _this.animate = function (circles) {
+      return function () {
+        var newCircles = [];
+        if (circles.length === 0) return;
 
-      if (circles.length === 0) return;
+        _this.context.clearRect(0, 0, _this.canvas.current.width, _this.canvas.current.height);
 
-      circles.forEach(function (circle) {
-        if (circle.outOfBounds()) {
-          return;
-        }
-        circle.draw();
-        newCircles.push(circle);
-      });
+        circles.forEach(function (circle) {
+          if (circle.outOfBounds()) {
+            return;
+          }
+          circle.draw();
+          newCircles.push(circle);
+        });
 
-      requestAnimationFrame(_this.animate(newCircles));
-    };
-
-    _this.canvas = _react2.default.createRef();
-    return _this;
+        requestAnimationFrame(_this.animate(newCircles));
+      };
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Canvas, [{
@@ -20340,7 +20345,7 @@ var Canvas = function (_React$Component) {
       this.canvas.current.width = width;
       this.canvas.current.height = height;
 
-      window.addEventListener('keydown', this.beginAnimation.bind(this));
+      window.addEventListener('keydown', this.createAnimation.bind(this));
     }
   }, {
     key: 'render',
@@ -20802,16 +20807,57 @@ var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/i
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _app = __webpack_require__(/*! ./app */ "./src/app.jsx");
+var _root = __webpack_require__(/*! ./root */ "./src/root.jsx");
 
-var _app2 = _interopRequireDefault(_app);
+var _root2 = _interopRequireDefault(_root);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 document.addEventListener('DOMContentLoaded', function () {
   var root = document.getElementById('root');
-  _reactDom2.default.render(_react2.default.createElement(_app2.default, null), root);
+  _reactDom2.default.render(_react2.default.createElement(_root2.default, null), root);
 });
+
+/***/ }),
+
+/***/ "./src/root.jsx":
+/*!**********************!*\
+  !*** ./src/root.jsx ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _app = __webpack_require__(/*! ./app */ "./src/app.jsx");
+
+var _app2 = _interopRequireDefault(_app);
+
+var _canvas = __webpack_require__(/*! ./components/canvas */ "./src/components/canvas.jsx");
+
+var _canvas2 = _interopRequireDefault(_canvas);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Root = function Root() {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(_canvas2.default, null),
+    _react2.default.createElement(_app2.default, null)
+  );
+};
+
+exports.default = Root;
 
 /***/ })
 

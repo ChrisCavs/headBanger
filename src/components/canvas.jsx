@@ -3,10 +3,7 @@ import Circle from '../circle'
 
 class Canvas extends React.Component {
 
-  constructor (props) {
-    super(props)
-    this.canvas = React.createRef()
-  }
+  canvas = React.createRef()
 
   componentDidMount () {
     this.context = this.canvas.current.getContext('2d')
@@ -15,26 +12,24 @@ class Canvas extends React.Component {
     this.canvas.current.width = width
     this.canvas.current.height = height
 
-    window.addEventListener('keydown', this.beginAnimation.bind(this))
+    window.addEventListener('keydown', this.createAnimation.bind(this))
   }
 
   create = (width, height) => {
 
     // radius between 2 and 6
-    const radius = 2 + Math.random() * 3
+    const radius = 3 + Math.random() * 8
 
-    // velocities
-    const vx = -5 + Math.random() * 10
-    const vy = -5 + Math.random() * 10
+    const vx = -5 + (Math.random() * 15)
+    const vy = -5 + (Math.random() * 15)
 
-    // colors
     const r = Math.round(Math.random()) * 255
     const g = Math.round(Math.random()) * 255
     const b = Math.round(Math.random()) * 255
-    const rgba = `rgba(${r}, ${g}, ${b}, 0.5)`
+    const rgba = `rgba(${r}, ${g}, ${b}, 0.4)`
 
     return new Circle(
-      this.canvas,
+      this.canvas.current,
       this.context,
       [width, height],
       [vx, vy],
@@ -43,22 +38,30 @@ class Canvas extends React.Component {
     )
   }
 
-  beginAnimation = event => {
-    const width = window.innerWidth * Math.random()
-    const height = window.innerHeight * Math.random()
-
-    const circles = []
-    for (let i = 0; i < 50; i++) {
-      circles.push(this.create(width, height))
-    }
-    
-    this.animate(circles)
+  createAnimation = event => {
+    this.beginAnimation()
   }
 
-  animate = circles => {
-    let newCircles = []
+  beginAnimation = event => {
+    const width = (window.innerWidth - 300) * Math.random()
+    const height = (window.innerHeight - 300) * Math.random()
 
+    if (!this.circles) {
+      this.circles = []
+    }
+
+    for (let i = 0; i < 40; i++) {
+      this.circles.push(this.create(width, height))
+    }
+    
+    this.animate(this.circles)()
+  }
+
+  animate = circles => () => {
+    let newCircles = []
     if (circles.length === 0) return
+
+    this.context.clearRect(0, 0, this.canvas.current.width, this.canvas.current.height)
 
     circles.forEach(circle => {
       if (circle.outOfBounds()) {
