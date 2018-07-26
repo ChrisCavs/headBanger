@@ -20086,6 +20086,64 @@ exports.default = App;
 
 /***/ }),
 
+/***/ "./src/circle.js":
+/*!***********************!*\
+  !*** ./src/circle.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Circle = function () {
+  function Circle(canvas, ctx, pos, vel, color, radius) {
+    _classCallCheck(this, Circle);
+
+    this.canvas = canvas;
+    this.ctx = ctx;
+    this.pos = pos;
+    this.vel = vel;
+    this.color = color;
+    this.radius = radius;
+  }
+
+  _createClass(Circle, [{
+    key: "draw",
+    value: function draw() {
+      this.pos[0] += this.vel[0];
+      this.pos[1] += this.vel[1];
+
+      this.ctx.beginPath();
+      this.ctx.arc(this.pos[0], this.pos[1], this.radius, 0, Math.PI * 2);
+      this.ctx.fillStyle = this.color;
+      this.ctx.fill();
+    }
+  }, {
+    key: "outOfBounds",
+    value: function outOfBounds() {
+      var cWidth = this.canvas.width;
+      var cHeight = this.canvas.height;
+
+      return this.pos[0] > cWidth || this.pos[0] < 0 || this.pos[1] > cHeight || this.pos[1] < 0;
+    }
+  }]);
+
+  return Circle;
+}();
+
+exports.default = Circle;
+
+/***/ }),
+
 /***/ "./src/components/bind_option.jsx":
 /*!****************************************!*\
   !*** ./src/components/bind_option.jsx ***!
@@ -20203,6 +20261,10 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _circle = __webpack_require__(/*! ../circle */ "./src/circle.js");
+
+var _circle2 = _interopRequireDefault(_circle);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20234,9 +20296,7 @@ var Canvas = function (_React$Component) {
       var b = Math.round(Math.random()) * 255;
       var rgba = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.5)';
 
-      return {
-        width: width, height: height, radius: radius, vx: vx, vy: vy, rgba: rgba
-      };
+      return new _circle2.default(_this.canvas, _this.context, [width, height], [vx, vy], rgba, radius);
     };
 
     _this.beginAnimation = function (event) {
@@ -20247,7 +20307,24 @@ var Canvas = function (_React$Component) {
       for (var i = 0; i < 50; i++) {
         circles.push(_this.create(width, height));
       }
-      debugger;
+
+      _this.animate(circles);
+    };
+
+    _this.animate = function (circles) {
+      var newCircles = [];
+
+      if (circles.length === 0) return;
+
+      circles.forEach(function (circle) {
+        if (circle.outOfBounds()) {
+          return;
+        }
+        circle.draw();
+        newCircles.push(circle);
+      });
+
+      requestAnimationFrame(_this.animate(newCircles));
     };
 
     _this.canvas = _react2.default.createRef();
@@ -20276,39 +20353,6 @@ var Canvas = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Canvas;
-
-// var canvas = document.getElementById("canvas"),
-
-
-// function draw() {
-
-//   //Fill canvas with black color
-//   ctx.globalCompositeOperation = "source-over";
-//   ctx.fillStyle = "rgba(0,0,0,0.15)";
-//   ctx.fillRect(0, 0, W, H);
-
-//   //Fill the canvas with circles
-//   for (var j = 0; j < circles.length; j++) {
-//     var c = circles[j];
-
-//     //Create the circles
-//     ctx.beginPath();
-//     ctx.arc(c.x, c.y, c.radius, 0, Math.PI * 2, false);
-//     ctx.fillStyle = "rgba(" + c.r + ", " + c.g + ", " + c.b + ", 0.5)";
-//     ctx.fill();
-
-//     c.x += c.vx;
-//     c.y += c.vy;
-//     c.radius -= .02;
-
-//     if (c.radius < 0)
-//       circles[j] = new create();
-//   }
-// }
-
-// function animate() {
-//   requestAnimFrame(animate);
-//   draw();
 
 /***/ }),
 

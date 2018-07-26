@@ -1,4 +1,5 @@
 import React from 'react'
+import Circle from '../circle'
 
 class Canvas extends React.Component {
 
@@ -32,9 +33,14 @@ class Canvas extends React.Component {
     const b = Math.round(Math.random()) * 255
     const rgba = `rgba(${r}, ${g}, ${b}, 0.5)`
 
-    return {
-      width, height, radius, vx, vy, rgba
-    }
+    return new Circle(
+      this.canvas,
+      this.context,
+      [width, height],
+      [vx, vy],
+      rgba,
+      radius
+    )
   }
 
   beginAnimation = event => {
@@ -45,8 +51,27 @@ class Canvas extends React.Component {
     for (let i = 0; i < 50; i++) {
       circles.push(this.create(width, height))
     }
-    debugger
+    
+    this.animate(circles)
   }
+
+  animate = circles => {
+    let newCircles = []
+
+    if (circles.length === 0) return
+
+    circles.forEach(circle => {
+      if (circle.outOfBounds()) {
+        return
+      } 
+      circle.draw()
+      newCircles.push(circle)
+    })
+
+    requestAnimationFrame(this.animate(newCircles))
+  }
+
+
 
   render () {
     return (
@@ -56,38 +81,3 @@ class Canvas extends React.Component {
 }
 
 export default Canvas
-
-
-// var canvas = document.getElementById("canvas"),
-
-
-
-// function draw() {
-
-//   //Fill canvas with black color
-//   ctx.globalCompositeOperation = "source-over";
-//   ctx.fillStyle = "rgba(0,0,0,0.15)";
-//   ctx.fillRect(0, 0, W, H);
-
-//   //Fill the canvas with circles
-//   for (var j = 0; j < circles.length; j++) {
-//     var c = circles[j];
-
-//     //Create the circles
-//     ctx.beginPath();
-//     ctx.arc(c.x, c.y, c.radius, 0, Math.PI * 2, false);
-//     ctx.fillStyle = "rgba(" + c.r + ", " + c.g + ", " + c.b + ", 0.5)";
-//     ctx.fill();
-
-//     c.x += c.vx;
-//     c.y += c.vy;
-//     c.radius -= .02;
-
-//     if (c.radius < 0)
-//       circles[j] = new create();
-//   }
-// }
-
-// function animate() {
-//   requestAnimFrame(animate);
-//   draw();
