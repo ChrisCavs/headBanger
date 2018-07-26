@@ -119,3 +119,7 @@ kbd {
 .sound-option:hover {
   border-color: white;
 }
+
+.bind-options {
+  color: white;
+}

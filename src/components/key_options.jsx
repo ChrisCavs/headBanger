@@ -22,7 +22,13 @@ class KeyOptions extends React.Component {
     let text = 'bind-settings'
 
     if (this.state.reveal === 'bind') {
-      option = <BindOption change={this.props.change('keyTag')} name={this.props.name} />
+      option = (
+        <BindOption 
+          change={this.props.change('keyTag')}
+          name={this.props.name}
+          toggleKeyListeners={this.props.toggleKeyListeners}
+        />
+      )
       click = this.switch('sound')
       text = 'sound-settings'
     }
