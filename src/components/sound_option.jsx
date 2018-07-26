@@ -8,7 +8,7 @@ class SoundOption extends React.Component {
     const soundOptions = Constants[this.props.name].map((sound, i) => {
       return (
         <SoundSelection 
-          key={i} 
+          key={i}
           className="sound-option" 
           change={this.props.change}
           sound={sound}
