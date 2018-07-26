@@ -1,21 +1,19 @@
 import React from 'react'
 import Constants from '../constants'
+import SoundSelection from './sound_selection'
 
 class SoundOption extends React.Component {
-
-  handleClick = sound => () => {
-    this.props.change(sound)
-  }
 
   render () {
     const soundOptions = Constants[this.props.name].map((sound, i) => {
       return (
-        <div 
+        <SoundSelection 
           key={i} 
           className="sound-option" 
-          onClick={this.handleClick(sound)}>
-          {sound}
-        </div>
+          change={this.props.change}
+          sound={sound}
+          currentSound={this.props.currentSound}
+        />
       )
     })
 

@@ -26,8 +26,16 @@ class BindOption extends React.Component {
     return (
       <div className="bind-options">
         <p>Press a key to modify binding</p>
-        <div className="bind-display">{this.state.currentBind}</div>
-        <button onClick={this.save}>Save Binding</button>
+
+        <div className="bind-display">
+          {this.state.currentBind}
+        </div>
+
+        <button 
+          className="option-switch" 
+          onClick={this.save}
+        >Save Binding
+        </button>
       </div>
     )
   }

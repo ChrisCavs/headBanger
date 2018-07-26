@@ -13,8 +13,7 @@ class Key extends React.Component {
 
   change = name => val => {
     this.setState({ 
-      [name]: val,
-      hide: true
+      [name]: val
     })
   }
   
@@ -79,7 +78,8 @@ class Key extends React.Component {
           name={this.props.name}
           hide={this.state.hide}
           hideOptions={this.hideOptions}
-          change={this.change} 
+          change={this.change}
+          sound={this.state.sound} 
         />
       </div>
     )

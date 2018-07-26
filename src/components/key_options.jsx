@@ -17,7 +17,13 @@ class KeyOptions extends React.Component {
       return <div></div>
     }
 
-    let option = <SoundOption change={this.props.change('sound')} name={this.props.name} />
+    let option = (
+      <SoundOption 
+        change={this.props.change('sound')} 
+        name={this.props.name}
+        currentSound={this.props.sound}
+      />
+    )
     let click = this.switch('bind')
     let text = 'bind-settings'
 

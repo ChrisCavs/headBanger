@@ -20166,7 +20166,10 @@ var BindOption = function (_React$Component) {
         ),
         _react2.default.createElement(
           'button',
-          { onClick: this.save },
+          {
+            className: 'option-switch',
+            onClick: this.save
+          },
           'Save Binding'
         )
       );
@@ -20298,9 +20301,7 @@ var Key = function (_React$Component) {
       classes: ''
     }, _this.audio = _react2.default.createRef(), _this.change = function (name) {
       return function (val) {
-        var _this$setState;
-
-        _this.setState((_this$setState = {}, _defineProperty(_this$setState, name, val), _defineProperty(_this$setState, 'hide', true), _this$setState));
+        _this.setState(_defineProperty({}, name, val));
       };
     }, _this.handleKeyDown = function (event) {
       if (!_this.props.pause && event.key === _this.state.keyTag) {
@@ -20367,7 +20368,8 @@ var Key = function (_React$Component) {
           name: this.props.name,
           hide: this.state.hide,
           hideOptions: this.hideOptions,
-          change: this.change
+          change: this.change,
+          sound: this.state.sound
         })
       );
     }
@@ -20447,7 +20449,11 @@ var KeyOptions = function (_React$Component) {
         return _react2.default.createElement('div', null);
       }
 
-      var option = _react2.default.createElement(_sound_option2.default, { change: this.props.change('sound'), name: this.props.name });
+      var option = _react2.default.createElement(_sound_option2.default, {
+        change: this.props.change('sound'),
+        name: this.props.name,
+        currentSound: this.props.sound
+      });
       var click = this.switch('bind');
       var text = 'bind-settings';
 
@@ -20515,6 +20521,10 @@ var _constants = __webpack_require__(/*! ../constants */ "./src/constants.js");
 
 var _constants2 = _interopRequireDefault(_constants);
 
+var _sound_selection = __webpack_require__(/*! ./sound_selection */ "./src/components/sound_selection.jsx");
+
+var _sound_selection2 = _interopRequireDefault(_sound_selection);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20527,21 +20537,9 @@ var SoundOption = function (_React$Component) {
   _inherits(SoundOption, _React$Component);
 
   function SoundOption() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
     _classCallCheck(this, SoundOption);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SoundOption.__proto__ || Object.getPrototypeOf(SoundOption)).call.apply(_ref, [this].concat(args))), _this), _this.handleClick = function (sound) {
-      return function () {
-        _this.props.change(sound);
-      };
-    }, _temp), _possibleConstructorReturn(_this, _ret);
+    return _possibleConstructorReturn(this, (SoundOption.__proto__ || Object.getPrototypeOf(SoundOption)).apply(this, arguments));
   }
 
   _createClass(SoundOption, [{
@@ -20550,14 +20548,13 @@ var SoundOption = function (_React$Component) {
       var _this2 = this;
 
       var soundOptions = _constants2.default[this.props.name].map(function (sound, i) {
-        return _react2.default.createElement(
-          'div',
-          {
-            key: i,
-            className: 'sound-option',
-            onClick: _this2.handleClick(sound) },
-          sound
-        );
+        return _react2.default.createElement(_sound_selection2.default, {
+          key: i,
+          className: 'sound-option',
+          change: _this2.props.change,
+          sound: sound,
+          currentSound: _this2.props.currentSound
+        });
       });
 
       return _react2.default.createElement(
@@ -20572,6 +20569,81 @@ var SoundOption = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = SoundOption;
+
+/***/ }),
+
+/***/ "./src/components/sound_selection.jsx":
+/*!********************************************!*\
+  !*** ./src/components/sound_selection.jsx ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SoundSelection = function (_React$Component) {
+  _inherits(SoundSelection, _React$Component);
+
+  function SoundSelection() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, SoundSelection);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SoundSelection.__proto__ || Object.getPrototypeOf(SoundSelection)).call.apply(_ref, [this].concat(args))), _this), _this.handleClick = function (event) {
+      event.stopPropagation();
+      _this.props.change(_this.props.sound);
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(SoundSelection, [{
+    key: 'render',
+    value: function render() {
+      var classes = 'sound-option';
+
+      if (this.props.currentSound === this.props.sound) {
+        classes += ' active';
+      }
+
+      return _react2.default.createElement(
+        'div',
+        {
+          className: classes,
+          onClick: this.handleClick
+        },
+        this.props.sound
+      );
+    }
+  }]);
+
+  return SoundSelection;
+}(_react2.default.Component);
+
+exports.default = SoundSelection;
 
 /***/ }),
 
