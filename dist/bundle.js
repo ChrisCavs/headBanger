@@ -20012,6 +20012,10 @@ var _canvas = __webpack_require__(/*! ./components/canvas */ "./src/components/c
 
 var _canvas2 = _interopRequireDefault(_canvas);
 
+var _constants = __webpack_require__(/*! ./constants */ "./src/constants.js");
+
+var _constants2 = _interopRequireDefault(_constants);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App() {
@@ -20019,12 +20023,11 @@ var App = function App() {
   var sounds = ['kick', 'snare', 'tom1', 'tom2', 'hi-hat', 'open-hat', 'symbol', 'clap', 'fx'];
 
   var keys = sounds.map(function (sound, i) {
-    var soundString = sound + '-0';
     return _react2.default.createElement(_key2.default, {
       key: i,
       name: sound,
       keyTag: starterBinds[i],
-      sound: soundString
+      sound: _constants2.default[sound][0]
     });
   });
 
@@ -20209,7 +20212,9 @@ var Key = function (_React$Component) {
       classes: ''
     }, _this.audio = _react2.default.createRef(), _this.change = function (name) {
       return function (val) {
-        _this.setState(_defineProperty({}, name, val));
+        var _this$setState;
+
+        _this.setState((_this$setState = {}, _defineProperty(_this$setState, name, val), _defineProperty(_this$setState, 'hide', true), _this$setState));
       };
     }, _this.handleKeyDown = function (event) {
       if (event.key === _this.state.keyTag) {
@@ -20272,6 +20277,7 @@ var Key = function (_React$Component) {
           })
         ),
         _react2.default.createElement(_key_options2.default, {
+          name: this.props.name,
           hide: this.state.hide,
           hideOptions: this.hideOptions,
           change: this.change
@@ -20340,7 +20346,8 @@ var KeyOptions = function (_React$Component) {
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = KeyOptions.__proto__ || Object.getPrototypeOf(KeyOptions)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       reveal: 'sound'
     }, _this.switch = function (name) {
-      return function () {
+      return function (event) {
+        event.stopPropagation();
         _this.setState({ reveal: name });
       };
     }, _temp), _possibleConstructorReturn(_this, _ret);
@@ -20353,35 +20360,34 @@ var KeyOptions = function (_React$Component) {
         return _react2.default.createElement('div', null);
       }
 
-      var option = _react2.default.createElement(_sound_option2.default, { change: this.props.change });
+      var option = _react2.default.createElement(_sound_option2.default, { change: this.props.change('sound'), name: this.props.name });
       var click = this.switch('bind');
       var text = 'bind-settings';
 
       if (this.state.reveal === 'bind') {
-        option = _react2.default.createElement(_bind_option2.default, { change: this.props.change });
+        option = _react2.default.createElement(_bind_option2.default, { change: this.props.change('keyTag'), name: this.props.name });
         click = this.switch('sound');
         text = 'sound-settings';
       }
 
       return _react2.default.createElement(
         'div',
-        { className: 'key-options' },
+        {
+          className: 'key-options',
+          onClick: this.props.hideOptions
+        },
         _react2.default.createElement(
-          'button',
-          {
-            className: 'option-close',
-            onClick: this.props.hideOptions
-          },
-          'x'
-        ),
-        option,
-        _react2.default.createElement(
-          'button',
-          {
-            className: 'option-switch',
-            onClick: click
-          },
-          text
+          'div',
+          { className: 'key-options-content' },
+          option,
+          _react2.default.createElement(
+            'button',
+            {
+              className: 'option-switch',
+              onClick: click
+            },
+            text
+          )
         )
       );
     }
@@ -20414,6 +20420,10 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _constants = __webpack_require__(/*! ../constants */ "./src/constants.js");
+
+var _constants2 = _interopRequireDefault(_constants);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20426,15 +20436,44 @@ var SoundOption = function (_React$Component) {
   _inherits(SoundOption, _React$Component);
 
   function SoundOption() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, SoundOption);
 
-    return _possibleConstructorReturn(this, (SoundOption.__proto__ || Object.getPrototypeOf(SoundOption)).apply(this, arguments));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SoundOption.__proto__ || Object.getPrototypeOf(SoundOption)).call.apply(_ref, [this].concat(args))), _this), _this.handleClick = function (sound) {
+      return function () {
+        _this.props.change(sound);
+      };
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(SoundOption, [{
-    key: "render",
+    key: 'render',
     value: function render() {
-      return _react2.default.createElement("div", { className: "sound-option" });
+      var _this2 = this;
+
+      var soundOptions = _constants2.default[this.props.name].map(function (sound, i) {
+        return _react2.default.createElement(
+          'div',
+          {
+            key: i,
+            className: 'sound-option',
+            onClick: _this2.handleClick(sound) },
+          sound
+        );
+      });
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'sound-options' },
+        soundOptions
+      );
     }
   }]);
 
@@ -20442,6 +20481,33 @@ var SoundOption = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = SoundOption;
+
+/***/ }),
+
+/***/ "./src/constants.js":
+/*!**************************!*\
+  !*** ./src/constants.js ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  kick: ['acoustic-kick-1'],
+  snare: [],
+  tom1: [],
+  tom2: [],
+  'hi-hat': [],
+  'open-hat': [],
+  symbol: [],
+  clap: [],
+  fx: []
+};
 
 /***/ }),
 

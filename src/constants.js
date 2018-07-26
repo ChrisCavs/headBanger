@@ -1,6 +1,6 @@
 export default {
   kick: [
-    
+    'acoustic-kick-1'
   ],
   snare: [
 

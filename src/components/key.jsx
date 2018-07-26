@@ -12,7 +12,10 @@ class Key extends React.Component {
   audio = React.createRef()
 
   change = name => val => {
-    this.setState({ [name]: val })
+    this.setState({ 
+      [name]: val,
+      hide: true
+    })
   }
   
   componentDidMount() {
@@ -72,6 +75,7 @@ class Key extends React.Component {
 
         </div>
         <KeyOptions
+          name={this.props.name}
           hide={this.state.hide}
           hideOptions={this.hideOptions}
           change={this.change} 

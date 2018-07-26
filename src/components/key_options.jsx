@@ -7,7 +7,8 @@ class KeyOptions extends React.Component {
     reveal: 'sound'
   }
 
-  switch = name => () => {
+  switch = name => event => {
+    event.stopPropagation()
     this.setState({ reveal: name })
   }
 
@@ -16,31 +17,31 @@ class KeyOptions extends React.Component {
       return <div></div>
     }
 
-    let option = <SoundOption change={this.props.change} />
+    let option = <SoundOption change={this.props.change('sound')} name={this.props.name} />
     let click = this.switch('bind')
     let text = 'bind-settings'
 
     if (this.state.reveal === 'bind') {
-      option = <BindOption change={this.props.change} />
+      option = <BindOption change={this.props.change('keyTag')} name={this.props.name} />
       click = this.switch('sound')
       text = 'sound-settings'
     }
 
     return (
-      <div className={'key-options'}>
-        <button
-          className="option-close"
-          onClick={this.props.hideOptions}
-        >x
-        </button>
+      <div 
+        className="key-options"
+        onClick={this.props.hideOptions}
+      >
+        <div className={'key-options-content'}>
 
-        {option}
+          {option}
 
-        <button
-          className="option-switch"
-          onClick={click}
-        >{text}
-        </button>
+          <button
+            className="option-switch"
+            onClick={click}
+          >{text}
+          </button>
+        </div>
       </div>
     )
   }

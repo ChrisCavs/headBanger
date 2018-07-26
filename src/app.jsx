@@ -1,6 +1,7 @@
 import React from 'react'
 import Key from './components/key'
 import Canvas from './components/canvas'
+import Constants from './constants'
 
 const App = () => {
   const starterBinds = ['q','w','e','a','s','d','z','x','c']
@@ -11,13 +12,12 @@ const App = () => {
   ]
 
   const keys = sounds.map((sound, i) => {
-    const soundString = `${sound}-0`
     return (
       <Key 
         key={i} 
         name={sound} 
         keyTag={starterBinds[i]} 
-        sound={soundString}
+        sound={Constants[sound][0]}
       />
     )
   })
