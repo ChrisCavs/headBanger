@@ -1,7 +1,6 @@
 import React from 'react'
 import Key from './components/key'
-import Canvas from './components/canvas'
-import Constants from './constants'
+import Constants from './helpers/constants'
 
 class App extends React.Component {
   state = {

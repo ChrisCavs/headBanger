@@ -20010,11 +20010,7 @@ var _key2 = __webpack_require__(/*! ./components/key */ "./src/components/key.js
 
 var _key3 = _interopRequireDefault(_key2);
 
-var _canvas = __webpack_require__(/*! ./components/canvas */ "./src/components/canvas.jsx");
-
-var _canvas2 = _interopRequireDefault(_canvas);
-
-var _constants = __webpack_require__(/*! ./constants */ "./src/constants.js");
+var _constants = __webpack_require__(/*! ./helpers/constants */ "./src/helpers/constants.js");
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -20082,64 +20078,6 @@ var App = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = App;
-
-/***/ }),
-
-/***/ "./src/circle.js":
-/*!***********************!*\
-  !*** ./src/circle.js ***!
-  \***********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Circle = function () {
-  function Circle(canvas, ctx, pos, vel, color, radius) {
-    _classCallCheck(this, Circle);
-
-    this.canvas = canvas;
-    this.ctx = ctx;
-    this.pos = pos;
-    this.vel = vel;
-    this.color = color;
-    this.radius = radius;
-  }
-
-  _createClass(Circle, [{
-    key: "draw",
-    value: function draw() {
-      this.pos[0] += this.vel[0];
-      this.pos[1] += this.vel[1];
-
-      this.ctx.beginPath();
-      this.ctx.arc(this.pos[0], this.pos[1], this.radius, 0, Math.PI * 2);
-      this.ctx.fillStyle = this.color;
-      this.ctx.fill();
-    }
-  }, {
-    key: "outOfBounds",
-    value: function outOfBounds() {
-      var cWidth = this.canvas.width;
-      var cHeight = this.canvas.height;
-
-      return this.pos[0] > cWidth || this.pos[0] < 0 || this.pos[1] > cHeight || this.pos[1] < 0;
-    }
-  }]);
-
-  return Circle;
-}();
-
-exports.default = Circle;
 
 /***/ }),
 
@@ -20261,7 +20199,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _circle = __webpack_require__(/*! ../circle */ "./src/circle.js");
+var _circle = __webpack_require__(/*! ../helpers/circle */ "./src/helpers/circle.js");
 
 var _circle2 = _interopRequireDefault(_circle);
 
@@ -20287,22 +20225,19 @@ var Canvas = function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Canvas.__proto__ || Object.getPrototypeOf(Canvas)).call.apply(_ref, [this].concat(args))), _this), _this.canvas = _react2.default.createRef(), _this.create = function (width, height) {
-
-      // radius between 2 and 6
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Canvas.__proto__ || Object.getPrototypeOf(Canvas)).call.apply(_ref, [this].concat(args))), _this), _this.canvas = _react2.default.createRef(), _this.create = function (width, height, rgba) {
       var radius = 3 + Math.random() * 8;
 
       var vx = -5 + Math.random() * 15;
       var vy = -5 + Math.random() * 15;
 
+      return new _circle2.default(_this.canvas.current, _this.context, [width, height], [vx, vy], rgba, radius);
+    }, _this.getRandomColor = function () {
       var r = Math.round(Math.random()) * 255;
       var g = Math.round(Math.random()) * 255;
       var b = Math.round(Math.random()) * 255;
-      var rgba = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.4)';
 
-      return new _circle2.default(_this.canvas.current, _this.context, [width, height], [vx, vy], rgba, radius);
-    }, _this.createAnimation = function (event) {
-      _this.beginAnimation();
+      return 'rgba(' + r + ', ' + g + ', ' + b + ', 0.4)';
     }, _this.beginAnimation = function (event) {
       var width = (window.innerWidth - 300) * Math.random();
       var height = (window.innerHeight - 300) * Math.random();
@@ -20311,8 +20246,10 @@ var Canvas = function (_React$Component) {
         _this.circles = [];
       }
 
+      var rgba = _this.getRandomColor();
+
       for (var i = 0; i < 40; i++) {
-        _this.circles.push(_this.create(width, height));
+        _this.circles.push(_this.create(width, height, rgba));
       }
 
       _this.animate(_this.circles)();
@@ -20345,7 +20282,7 @@ var Canvas = function (_React$Component) {
       this.canvas.current.width = width;
       this.canvas.current.height = height;
 
-      window.addEventListener('keydown', this.createAnimation.bind(this));
+      window.addEventListener('keydown', this.beginAnimation.bind(this));
     }
   }, {
     key: 'render',
@@ -20632,7 +20569,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _constants = __webpack_require__(/*! ../constants */ "./src/constants.js");
+var _constants = __webpack_require__(/*! ../helpers/constants */ "./src/helpers/constants.js");
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -20762,10 +20699,68 @@ exports.default = SoundSelection;
 
 /***/ }),
 
-/***/ "./src/constants.js":
-/*!**************************!*\
-  !*** ./src/constants.js ***!
-  \**************************/
+/***/ "./src/helpers/circle.js":
+/*!*******************************!*\
+  !*** ./src/helpers/circle.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Circle = function () {
+  function Circle(canvas, ctx, pos, vel, color, radius) {
+    _classCallCheck(this, Circle);
+
+    this.canvas = canvas;
+    this.ctx = ctx;
+    this.pos = pos;
+    this.vel = vel;
+    this.color = color;
+    this.radius = radius;
+  }
+
+  _createClass(Circle, [{
+    key: "draw",
+    value: function draw() {
+      this.pos[0] += this.vel[0];
+      this.pos[1] += this.vel[1];
+
+      this.ctx.beginPath();
+      this.ctx.arc(this.pos[0], this.pos[1], this.radius, 0, Math.PI * 2);
+      this.ctx.fillStyle = this.color;
+      this.ctx.fill();
+    }
+  }, {
+    key: "outOfBounds",
+    value: function outOfBounds() {
+      var cWidth = this.canvas.width;
+      var cHeight = this.canvas.height;
+
+      return this.pos[0] > cWidth || this.pos[0] < 0 || this.pos[1] > cHeight || this.pos[1] < 0;
+    }
+  }]);
+
+  return Circle;
+}();
+
+exports.default = Circle;
+
+/***/ }),
+
+/***/ "./src/helpers/constants.js":
+/*!**********************************!*\
+  !*** ./src/helpers/constants.js ***!
+  \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

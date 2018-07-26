@@ -1,5 +1,5 @@
 import React from 'react'
-import Circle from '../circle'
+import Circle from '../helpers/circle'
 
 class Canvas extends React.Component {
 
@@ -12,21 +12,14 @@ class Canvas extends React.Component {
     this.canvas.current.width = width
     this.canvas.current.height = height
 
-    window.addEventListener('keydown', this.createAnimation.bind(this))
+    window.addEventListener('keydown', this.beginAnimation.bind(this))
   }
 
-  create = (width, height) => {
-
-    // radius between 2 and 6
+  create = (width, height, rgba) => {
     const radius = 3 + Math.random() * 8
 
     const vx = -5 + (Math.random() * 15)
     const vy = -5 + (Math.random() * 15)
-
-    const r = Math.round(Math.random()) * 255
-    const g = Math.round(Math.random()) * 255
-    const b = Math.round(Math.random()) * 255
-    const rgba = `rgba(${r}, ${g}, ${b}, 0.4)`
 
     return new Circle(
       this.canvas.current,
@@ -38,8 +31,12 @@ class Canvas extends React.Component {
     )
   }
 
-  createAnimation = event => {
-    this.beginAnimation()
+  getRandomColor = () => {
+    const r = Math.round(Math.random()) * 255
+    const g = Math.round(Math.random()) * 255
+    const b = Math.round(Math.random()) * 255
+
+    return `rgba(${r}, ${g}, ${b}, 0.4)`
   }
 
   beginAnimation = event => {
@@ -50,8 +47,10 @@ class Canvas extends React.Component {
       this.circles = []
     }
 
+    const rgba = this.getRandomColor()
+
     for (let i = 0; i < 40; i++) {
-      this.circles.push(this.create(width, height))
+      this.circles.push(this.create(width, height, rgba))
     }
     
     this.animate(this.circles)()

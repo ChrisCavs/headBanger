@@ -1,5 +1,5 @@
 import React from 'react'
-import Constants from '../constants'
+import Constants from '../helpers/constants'
 import SoundSelection from './sound_selection'
 
 class SoundOption extends React.Component {
