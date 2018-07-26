@@ -22,7 +22,7 @@ class Key extends React.Component {
   }
   
   handleKeyDown = event => {
-    if (!this.props.pause && event.key === this.state.keyTag) {
+    if (!window.pause && event.key === this.state.keyTag) {
       this.play()
     }
   }
@@ -74,7 +74,6 @@ class Key extends React.Component {
 
         </div>
         <KeyOptions
-          toggleKeyListeners={this.props.toggleKeyListeners}
           name={this.props.name}
           hide={this.state.hide}
           hideOptions={this.hideOptions}

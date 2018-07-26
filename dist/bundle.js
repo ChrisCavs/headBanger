@@ -20000,15 +20000,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _key2 = __webpack_require__(/*! ./components/key */ "./src/components/key.jsx");
+var _key = __webpack_require__(/*! ./components/key */ "./src/components/key.jsx");
 
-var _key3 = _interopRequireDefault(_key2);
+var _key2 = _interopRequireDefault(_key);
 
 var _constants = __webpack_require__(/*! ./helpers/constants */ "./src/helpers/constants.js");
 
@@ -20016,66 +20014,26 @@ var _constants2 = _interopRequireDefault(_constants);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var App = function App() {
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+  var starterBinds = ['q', 'w', 'e', 'a', 's', 'd', 'z', 'x', 'c'];
+  var sounds = ['kick', 'snare', 'tom1', 'tom2', 'hi-hat', 'open-hat', 'symbol', 'clap', 'fx'];
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+  var keys = sounds.map(function (sound, i) {
+    return _react2.default.createElement(_key2.default, {
+      key: i,
+      name: sound,
+      keyTag: starterBinds[i],
+      sound: _constants2.default[sound][0]
+    });
+  });
 
-var App = function (_React$Component) {
-  _inherits(App, _React$Component);
-
-  function App() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
-    _classCallCheck(this, App);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      pause: false
-    }, _this.toggleKeyListeners = function () {
-      if (_this.state.pause) {
-        _this.setState({ pause: false });
-        return;
-      }
-      _this.setState({ pause: true });
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  _createClass(App, [{
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      var starterBinds = ['q', 'w', 'e', 'a', 's', 'd', 'z', 'x', 'c'];
-      var sounds = ['kick', 'snare', 'tom1', 'tom2', 'hi-hat', 'open-hat', 'symbol', 'clap', 'fx'];
-
-      var keys = sounds.map(function (sound, i) {
-        return _react2.default.createElement(_key3.default, {
-          key: i,
-          pause: _this2.state.pause,
-          toggleKeyListeners: _this2.toggleKeyListeners,
-          name: sound,
-          keyTag: starterBinds[i],
-          sound: _constants2.default[sound][0]
-        });
-      });
-
-      return _react2.default.createElement(
-        'div',
-        { className: 'app' },
-        keys
-      );
-    }
-  }]);
-
-  return App;
-}(_react2.default.Component);
+  return _react2.default.createElement(
+    'div',
+    { className: 'app' },
+    keys
+  );
+};
 
 exports.default = App;
 
@@ -20135,13 +20093,13 @@ var BindOption = function (_React$Component) {
   _createClass(BindOption, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.props.toggleKeyListeners();
+      window.pause = true;
       window.addEventListener('keydown', this.makeSelection.bind(this));
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      this.props.toggleKeyListeners();
+      window.pause = false;
       window.removeEventListener('keydown', this.makeSelection.bind(this));
     }
   }, {
@@ -20239,6 +20197,8 @@ var Canvas = function (_React$Component) {
 
       return 'rgba(' + r + ', ' + g + ', ' + b + ', 0.4)';
     }, _this.beginAnimation = function (event) {
+      if (window.pause) return;
+
       var width = (window.innerWidth - 300) * Math.random();
       var height = (window.innerHeight - 300) * Math.random();
 
@@ -20356,7 +20316,7 @@ var Key = function (_React$Component) {
         _this.setState(_defineProperty({}, name, val));
       };
     }, _this.handleKeyDown = function (event) {
-      if (!_this.props.pause && event.key === _this.state.keyTag) {
+      if (!window.pause && event.key === _this.state.keyTag) {
         _this.play();
       }
     }, _this.play = function () {
@@ -20416,7 +20376,6 @@ var Key = function (_React$Component) {
           })
         ),
         _react2.default.createElement(_key_options2.default, {
-          toggleKeyListeners: this.props.toggleKeyListeners,
           name: this.props.name,
           hide: this.state.hide,
           hideOptions: this.hideOptions,
@@ -20512,8 +20471,7 @@ var KeyOptions = function (_React$Component) {
       if (this.state.reveal === 'bind') {
         option = _react2.default.createElement(_bind_option2.default, {
           change: this.props.change('keyTag'),
-          name: this.props.name,
-          toggleKeyListeners: this.props.toggleKeyListeners
+          name: this.props.name
         });
         click = this.switch('sound');
         text = 'sound-settings';

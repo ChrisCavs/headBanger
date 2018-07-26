@@ -14,12 +14,12 @@ class BindOption extends React.Component {
   }
 
   componentDidMount () {
-    this.props.toggleKeyListeners()
+    window.pause = true
     window.addEventListener('keydown',this.makeSelection.bind(this))
   }
 
   componentWillUnmount () {
-    this.props.toggleKeyListeners()
+    window.pause = false
     window.removeEventListener('keydown', this.makeSelection.bind(this))
   }
 

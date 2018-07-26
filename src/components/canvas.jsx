@@ -40,6 +40,8 @@ class Canvas extends React.Component {
   }
 
   beginAnimation = event => {
+    if (window.pause) return
+
     const width = (window.innerWidth - 300) * Math.random()
     const height = (window.innerHeight - 300) * Math.random()
 

@@ -32,7 +32,6 @@ class KeyOptions extends React.Component {
         <BindOption 
           change={this.props.change('keyTag')}
           name={this.props.name}
-          toggleKeyListeners={this.props.toggleKeyListeners}
         />
       )
       click = this.switch('sound')

@@ -2,7 +2,7 @@ import React from 'react'
 import App from './app'
 import Canvas from './components/canvas'
 
-const Root = () => {
+const Root= () => {
   return (
     <div>
       <Canvas />
