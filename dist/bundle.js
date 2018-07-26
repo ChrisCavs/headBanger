@@ -20248,29 +20248,34 @@ var Key = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        {
-          className: "key" + ' ' + this.state.classes,
-          onClick: this.toggleOptions,
-          onTransitionEnd: this.removeClass
-        },
+        { className: 'key-container' },
         _react2.default.createElement(
-          'kbd',
-          null,
-          this.state.keyTag
+          'div',
+          {
+            className: "key" + ' ' + this.state.classes,
+            onClick: this.toggleOptions,
+            onTransitionEnd: this.removeClass
+          },
+          _react2.default.createElement(
+            'kbd',
+            null,
+            this.state.keyTag
+          ),
+          _react2.default.createElement(
+            'span',
+            { className: 'sound' },
+            this.props.name
+          ),
+          _react2.default.createElement('audio', {
+            ref: this.audio,
+            src: audioSrc
+          })
         ),
-        _react2.default.createElement(
-          'span',
-          { className: 'sound' },
-          this.props.name
-        ),
-        _react2.default.createElement('audio', {
-          ref: this.audio,
-          src: audioSrc
-        }),
         _react2.default.createElement(_key_options2.default, {
           hide: this.state.hide,
           hideOptions: this.hideOptions,
-          change: this.change })
+          change: this.change
+        })
       );
     }
   }]);
