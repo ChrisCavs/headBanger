@@ -20498,7 +20498,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = {
-  kick: ['acoustic-kick-1'],
+  kick: ['acoustic-kick-1', 'electric-kick-1'],
   snare: [],
   tom1: [],
   tom2: [],

@@ -93,7 +93,7 @@ kbd {
   margin: 50px auto;
   
   border-radius: 5px;
-  box-shadow: 1px 1px 10px #ffc600;
+  box-shadow: 0 0 5px 2px #ffc600;
 
   background-color: black;
 
@@ -103,6 +103,7 @@ kbd {
 .sound-options {
   display: flex;
   justify-content: space-around;
+  padding: 10px;
 }
 
 .sound-option {
