@@ -10,14 +10,14 @@ export default {
     'vinyl-snare-1', 'vinyl-snare-2'
   ],
   tom: [
-    'acoustic-tom-1', 'acoustic-tom-2', 'acoustic-tom-3',
-    'electric-tom-1', 'electric-tom-2', 'electric-tom-3',
-    'vinyl-tom-1', 'vinyl-tom-2', 'vinyl-tom-3'
+    'acoustic-tom-1', 'acoustic-tom-2',
+    'electric-tom-1', 'electric-tom-2',
+    'vinyl-tom-1', 'vinyl-tom-2'
   ],
   tom: [
-    'acoustic-tom-1', 'acoustic-tom-2', 'acoustic-tom-3',
-    'electric-tom-1', 'electric-tom-2', 'electric-tom-3',
-    'vinyl-tom-1', 'vinyl-tom-2', 'vinyl-tom-3'
+    'acoustic-tom-1', 'acoustic-tom-2',
+    'electric-tom-1', 'electric-tom-2',
+    'vinyl-tom-1', 'vinyl-tom-2'
   ],
   'hi-hat': [
     'acoustic-hi-hat-1', 'acoustic-hi-hat-2',
@@ -30,17 +30,17 @@ export default {
     'vinyl-open-hat-1', 'vinyl-open-hat-2'
   ],
   symbol: [
-    'acoustic-symbol-1', 'acoustic-symbol-2',
-    'electric-symbol-1', 'electric-symbol-2',
-    'vinyl-symbol-1', 'vinyl-symbol-2'
+    'acoustic-cymbal-1', 'acoustic-cymbal-2',
+    'electric-cymbal-1', 'electric-cymbal-2',
+    'vinyl-cymbal-1', 'vinyl-cymbal-2'
   ],
   clap: [
-    'acoustic-clap-1', 'acoustic-clap-2',
-    'electric-clap-1', 'electric-clap-2',
-    'vinyl-clap-1', 'vinyl-clap-2'
+    'clap-1', 'clap-2',
+    'clap-3', 'clap-4',
+    'clap-5'
   ],
   fx: [
-    'fx-1', 'fx-2', 'fx-3',
-    'fx-4', 'fx-5', 'fx-6',
+    'fx-1', 'fx-2', 
+    'fx-3', 'fx-4'
   ]
 }

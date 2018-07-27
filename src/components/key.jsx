@@ -56,7 +56,7 @@ class Key extends React.Component {
   }
   
   render () {
-    const audioSrc = `sounds/${this.state.sound}.wav`
+    const audioSrc = `sounds/${this.state.sound}.mp3`
 
     return (
       <div className="key-container">
