@@ -20348,9 +20348,19 @@ var Key = function (_React$Component) {
     value: function render() {
       var audioSrc = 'sounds/' + this.state.sound + '.mp3';
 
+      var keyTip = void 0;
+      if (this.props.name === 'kick') {
+        keyTip = _react2.default.createElement(
+          'div',
+          { className: 'key-tip' },
+          'Click Me'
+        );
+      }
+
       return _react2.default.createElement(
         'div',
         { className: 'key-container' },
+        keyTip,
         _react2.default.createElement(
           'div',
           {

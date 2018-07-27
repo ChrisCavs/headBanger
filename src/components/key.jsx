@@ -57,10 +57,16 @@ class Key extends React.Component {
   
   render () {
     const audioSrc = `sounds/${this.state.sound}.mp3`
+    
+    let keyTip
+    if (this.props.name === 'kick') {
+      keyTip = <div className="key-tip">Click Me</div>
+    }
 
     return (
       <div className="key-container">
-        <div 
+        {keyTip}
+        <div
           className={"key" + ' ' + this.state.classes}
           onClick={this.toggleOptions}
           onTransitionEnd={this.removeClass}

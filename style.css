@@ -54,6 +54,19 @@ html {
   z-index: 5;
 }
 
+.key-tip {
+  position: absolute;
+  left: 12px;
+  top: 28px;
+  
+  display: block;
+
+  color: #b30c0c;
+  font-weight: bold;
+  font-size: 13px;
+  transform: rotate(-0.125turn);
+}
+
 .playing {
   transform: scale(1.1);
   border: .4rem solid #ffc600;
