@@ -20505,6 +20505,66 @@ exports.default = KeyOptions;
 
 /***/ }),
 
+/***/ "./src/components/profile.jsx":
+/*!************************************!*\
+  !*** ./src/components/profile.jsx ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Profile = function Profile() {
+  return _react2.default.createElement(
+    "div",
+    { className: "profile" },
+    _react2.default.createElement(
+      "p",
+      { className: "profile-name" },
+      "Created by ",
+      _react2.default.createElement(
+        "span",
+        null,
+        "Chris Cavalea"
+      )
+    ),
+    _react2.default.createElement(
+      "div",
+      { className: "profile-links" },
+      _react2.default.createElement(
+        "a",
+        { href: "https://github.com/ChrisCavs" },
+        "GitHub"
+      ),
+      _react2.default.createElement(
+        "a",
+        { href: "https://www.linkedin.com/in/chriscavalea/" },
+        "LinkedIn"
+      ),
+      _react2.default.createElement(
+        "a",
+        { href: "https://chriscavs.github.io/" },
+        "Personal"
+      )
+    )
+  );
+};
+
+exports.default = Profile;
+
+/***/ }),
+
 /***/ "./src/components/sound_option.jsx":
 /*!*****************************************!*\
   !*** ./src/components/sound_option.jsx ***!
@@ -20825,14 +20885,19 @@ var _canvas = __webpack_require__(/*! ./components/canvas */ "./src/components/c
 
 var _canvas2 = _interopRequireDefault(_canvas);
 
+var _profile = __webpack_require__(/*! ./components/profile */ "./src/components/profile.jsx");
+
+var _profile2 = _interopRequireDefault(_profile);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Root = function Root() {
   return _react2.default.createElement(
     'div',
-    null,
+    { className: 'root' },
     _react2.default.createElement(_canvas2.default, null),
-    _react2.default.createElement(_app2.default, null)
+    _react2.default.createElement(_app2.default, null),
+    _react2.default.createElement(_profile2.default, null)
   );
 };
 

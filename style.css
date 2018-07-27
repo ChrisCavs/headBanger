@@ -18,6 +18,10 @@ html {
   height: 100%;
 }
 
+.root {
+  margin-top: 80px;
+}
+
 .app {
   display: flex;
   flex-wrap: wrap;
@@ -154,8 +158,8 @@ kbd {
 }
 
 .option-switch:hover {
-  color: #ffc600;
-  border-color: #ffc600;
+  color: #b30c0c;
+  border-color: #b30c0c;
 }
 
 .bind-display {
@@ -175,6 +179,39 @@ kbd {
 
 .active:hover {
   border-color: #ffc600;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 450px;
+  margin-top: 40px;
+}
+
+.profile-name {
+  color: white;
+  font-size: 19px;
+}
+
+.profile-name span {
+  margin-left: 5px;
+  color: #b30c0c;
+}
+
+.profile-links {
+  display: flex;
+  justify-content: space-around;
+}
+
+.profile-links a {
+  color: #b30c0c;
+  font-size: 16px;
+  text-decoration: none;
+  margin: 0 10px;
+
+  cursor: pointer;
+  z-index: 10;
 }
 
 @media only screen and (max-width: 1400px) {
@@ -217,5 +254,9 @@ kbd {
 
   .bind-display {
     margin-top: 0px;
+  }
+
+  .profile {
+    width: 300px;
   }
 }
