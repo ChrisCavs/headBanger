@@ -11,7 +11,6 @@ class Circle {
   draw () {
     this.pos[0] += this.vel[0]
     this.pos[1] += this.vel[1]
-    this.color.fade()
 
     this.ctx.beginPath()
     this.ctx.arc(this.pos[0], this.pos[1], this.radius, 0, Math.PI * 2)
@@ -20,6 +19,8 @@ class Circle {
   }
 
   outOfBounds () {
+    if (this.color.a < 0) return true
+
     const cWidth = this.canvas.width
     const cHeight = this.canvas.height
 
@@ -37,15 +38,16 @@ class Color {
     this.r = r
     this.g = g
     this.b = b
-    this.a = 0.8
+    this.a = 0.85
   }
 
   output () {
+    this.fade()
     return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})`
   }
 
   fade () {
-    this.a -= 0.0005
+    this.a -= 0.0004
   }
 }
 

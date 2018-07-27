@@ -102,11 +102,13 @@ kbd {
 .sound-options {
   display: flex;
   justify-content: space-around;
-  padding: 10px;
+  flex-wrap: wrap;
+  padding: 30px 10px;
 }
 
 .sound-option {
   padding: 8px;
+  margin-bottom: 15px;
   border: 0.5px solid black;
   border-radius: 5px;
 
@@ -173,4 +175,47 @@ kbd {
 
 .active:hover {
   border-color: #ffc600;
+}
+
+@media only screen and (max-width: 1400px) {
+  .app {
+    width: 300px;
+  }
+
+  .key {
+    width: 6rem;
+    margin: 0.6rem;
+  }
+
+  kbd {
+    font-size: 2.5rem;
+  }
+
+  .sound {
+    font-size: 1rem;
+  }
+
+  .key-options-content {
+    width: 300px;
+    height: 160px;
+
+    margin: 20px auto;
+  }
+
+  .sound-options {
+    padding: 10px;
+  }
+
+  .sound-option {
+    margin-bottom: 0;
+    font-size: 14px;
+  }
+
+  .option-switch {
+    font-size: 10px;
+  }
+
+  .bind-display {
+    margin-top: 0px;
+  }
 }

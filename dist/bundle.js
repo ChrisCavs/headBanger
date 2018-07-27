@@ -20690,7 +20690,6 @@ var Circle = function () {
     value: function draw() {
       this.pos[0] += this.vel[0];
       this.pos[1] += this.vel[1];
-      this.color.fade();
 
       this.ctx.beginPath();
       this.ctx.arc(this.pos[0], this.pos[1], this.radius, 0, Math.PI * 2);
@@ -20700,6 +20699,8 @@ var Circle = function () {
   }, {
     key: "outOfBounds",
     value: function outOfBounds() {
+      if (this.color.a < 0) return true;
+
       var cWidth = this.canvas.width;
       var cHeight = this.canvas.height;
 
@@ -20717,18 +20718,19 @@ var Color = function () {
     this.r = r;
     this.g = g;
     this.b = b;
-    this.a = 0.8;
+    this.a = 0.85;
   }
 
   _createClass(Color, [{
     key: "output",
     value: function output() {
+      this.fade();
       return "rgba(" + this.r + ", " + this.g + ", " + this.b + ", " + this.a + ")";
     }
   }, {
     key: "fade",
     value: function fade() {
-      this.a -= 0.0005;
+      this.a -= 0.0004;
     }
   }]);
 
