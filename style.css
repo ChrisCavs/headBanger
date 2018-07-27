@@ -58,12 +58,11 @@ html {
   position: absolute;
   left: 12px;
   top: 28px;
-  
-  display: block;
 
   color: #b30c0c;
   font-weight: bold;
   font-size: 13px;
+  
   transform: rotate(-0.125turn);
 }
 
@@ -276,5 +275,12 @@ kbd {
 
   .profile-links a {
     font-size: 14px;
+  }
+
+  .key-tip {
+    left: 8px;
+    top: 20px;
+
+    font-size: 10px;
   }
 }

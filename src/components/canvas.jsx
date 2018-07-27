@@ -18,8 +18,8 @@ class Canvas extends React.Component {
   create = (width, height, color) => {
     const radius = 3 + Math.random() * 8
 
-    const vx = -5 + (Math.random() * 15)
-    const vy = -5 + (Math.random() * 15)
+    const vx = -5 + (Math.random() * 12)
+    const vy = -5 + (Math.random() * 12)
 
     return new Circle(
       this.canvas.current,

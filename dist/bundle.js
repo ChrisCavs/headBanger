@@ -20184,8 +20184,8 @@ var Canvas = function (_React$Component) {
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Canvas.__proto__ || Object.getPrototypeOf(Canvas)).call.apply(_ref, [this].concat(args))), _this), _this.canvas = _react2.default.createRef(), _this.create = function (width, height, color) {
       var radius = 3 + Math.random() * 8;
 
-      var vx = -5 + Math.random() * 15;
-      var vy = -5 + Math.random() * 15;
+      var vx = -5 + Math.random() * 12;
+      var vy = -5 + Math.random() * 12;
 
       return new _classes.Circle(_this.canvas.current, _this.context, [width, height], [vx, vy], color, radius);
     }, _this.getRandomColor = function () {
@@ -20788,7 +20788,7 @@ var Color = function () {
     this.r = r;
     this.g = g;
     this.b = b;
-    this.a = 0.85;
+    this.a = 0.88;
   }
 
   _createClass(Color, [{
