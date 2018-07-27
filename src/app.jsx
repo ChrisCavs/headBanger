@@ -6,8 +6,8 @@ const App = () => {
 
   const starterBinds = ['q','w','e','a','s','d','z','x','c']
   const sounds = [
-    'kick', 'snare', 'tom1',
-    'tom2', 'hi-hat', 'open-hat', 
+    'kick', 'snare', 'tom',
+    'tom', 'hi-hat', 'open-hat', 
     'symbol', 'clap', 'fx'
   ]
 
