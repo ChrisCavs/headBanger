@@ -11,10 +11,11 @@ class Circle {
   draw () {
     this.pos[0] += this.vel[0]
     this.pos[1] += this.vel[1]
+    this.color.fade()
 
     this.ctx.beginPath()
     this.ctx.arc(this.pos[0], this.pos[1], this.radius, 0, Math.PI * 2)
-    this.ctx.fillStyle = this.color
+    this.ctx.fillStyle = this.color.output()
     this.ctx.fill()
   }
 
@@ -31,4 +32,21 @@ class Circle {
   }
 }
 
-export default Circle
+class Color {
+  constructor(r, g, b) {
+    this.r = r
+    this.g = g
+    this.b = b
+    this.a = 0.8
+  }
+
+  output () {
+    return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})`
+  }
+
+  fade () {
+    this.a -= 0.0005
+  }
+}
+
+export { Circle, Color }

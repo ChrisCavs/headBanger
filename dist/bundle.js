@@ -20157,9 +20157,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _circle = __webpack_require__(/*! ../helpers/circle */ "./src/helpers/circle.js");
-
-var _circle2 = _interopRequireDefault(_circle);
+var _classes = __webpack_require__(/*! ../helpers/classes */ "./src/helpers/classes.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20183,19 +20181,19 @@ var Canvas = function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Canvas.__proto__ || Object.getPrototypeOf(Canvas)).call.apply(_ref, [this].concat(args))), _this), _this.canvas = _react2.default.createRef(), _this.create = function (width, height, rgba) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Canvas.__proto__ || Object.getPrototypeOf(Canvas)).call.apply(_ref, [this].concat(args))), _this), _this.canvas = _react2.default.createRef(), _this.create = function (width, height, color) {
       var radius = 3 + Math.random() * 8;
 
       var vx = -5 + Math.random() * 15;
       var vy = -5 + Math.random() * 15;
 
-      return new _circle2.default(_this.canvas.current, _this.context, [width, height], [vx, vy], rgba, radius);
+      return new _classes.Circle(_this.canvas.current, _this.context, [width, height], [vx, vy], color, radius);
     }, _this.getRandomColor = function () {
       var r = Math.round(Math.random()) * 255;
       var g = Math.round(Math.random()) * 255;
       var b = Math.round(Math.random()) * 255;
 
-      return 'rgba(' + r + ', ' + g + ', ' + b + ', 0.4)';
+      return new _classes.Color(r, g, b);
     }, _this.beginAnimation = function (event) {
       if (window.pause) return;
 
@@ -20206,10 +20204,10 @@ var Canvas = function (_React$Component) {
         _this.circles = [];
       }
 
-      var rgba = _this.getRandomColor();
+      var color = _this.getRandomColor();
 
       for (var i = 0; i < 40; i++) {
-        _this.circles.push(_this.create(width, height, rgba));
+        _this.circles.push(_this.create(width, height, color));
       }
 
       _this.animate(_this.circles)();
@@ -20657,10 +20655,10 @@ exports.default = SoundSelection;
 
 /***/ }),
 
-/***/ "./src/helpers/circle.js":
-/*!*******************************!*\
-  !*** ./src/helpers/circle.js ***!
-  \*******************************/
+/***/ "./src/helpers/classes.js":
+/*!********************************!*\
+  !*** ./src/helpers/classes.js ***!
+  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20692,10 +20690,11 @@ var Circle = function () {
     value: function draw() {
       this.pos[0] += this.vel[0];
       this.pos[1] += this.vel[1];
+      this.color.fade();
 
       this.ctx.beginPath();
       this.ctx.arc(this.pos[0], this.pos[1], this.radius, 0, Math.PI * 2);
-      this.ctx.fillStyle = this.color;
+      this.ctx.fillStyle = this.color.output();
       this.ctx.fill();
     }
   }, {
@@ -20711,7 +20710,33 @@ var Circle = function () {
   return Circle;
 }();
 
-exports.default = Circle;
+var Color = function () {
+  function Color(r, g, b) {
+    _classCallCheck(this, Color);
+
+    this.r = r;
+    this.g = g;
+    this.b = b;
+    this.a = 0.8;
+  }
+
+  _createClass(Color, [{
+    key: "output",
+    value: function output() {
+      return "rgba(" + this.r + ", " + this.g + ", " + this.b + ", " + this.a + ")";
+    }
+  }, {
+    key: "fade",
+    value: function fade() {
+      this.a -= 0.0005;
+    }
+  }]);
+
+  return Color;
+}();
+
+exports.Circle = Circle;
+exports.Color = Color;
 
 /***/ }),
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import Circle from '../helpers/circle'
+import { Circle, Color } from '../helpers/classes'
 
 class Canvas extends React.Component {
 
@@ -15,7 +15,7 @@ class Canvas extends React.Component {
     window.addEventListener('keydown', this.beginAnimation.bind(this))
   }
 
-  create = (width, height, rgba) => {
+  create = (width, height, color) => {
     const radius = 3 + Math.random() * 8
 
     const vx = -5 + (Math.random() * 15)
@@ -26,7 +26,7 @@ class Canvas extends React.Component {
       this.context,
       [width, height],
       [vx, vy],
-      rgba,
+      color,
       radius
     )
   }
@@ -36,7 +36,7 @@ class Canvas extends React.Component {
     const g = Math.round(Math.random()) * 255
     const b = Math.round(Math.random()) * 255
 
-    return `rgba(${r}, ${g}, ${b}, 0.4)`
+    return new Color(r, g, b)
   }
 
   beginAnimation = event => {
@@ -49,10 +49,10 @@ class Canvas extends React.Component {
       this.circles = []
     }
 
-    const rgba = this.getRandomColor()
+    const color = this.getRandomColor()
 
     for (let i = 0; i < 40; i++) {
-      this.circles.push(this.create(width, height, rgba))
+      this.circles.push(this.create(width, height, color))
     }
     
     this.animate(this.circles)()
