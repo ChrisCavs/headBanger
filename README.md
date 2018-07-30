@@ -1,4 +1,4 @@
-## headBanger
+# headBanger
 
 Headbanger is an interactive drumkit written in React.js and HTML5.  See the demo [here](https://chriscavs.github.io/headBanger/).
 
