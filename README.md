@@ -1,18 +1,38 @@
-## High-level Overview
+## headBanger
 
-HeadBanger will utilize cDOM (my custom DOM manipulation library), HTML5 canvas, as well as some snazy CSS to create a customizable drummer webapp.
+Headbanger is an interactive drumkit written in React.js and HTML5.  See the demo [here](https://chriscavs.github.io/headBanger/).
 
-Users will be able to:
-  1. Hammer out a beat with their keyboard
-  2. Customize their key mapping via a popup menu
-  3. Customize each key's sound via a similar popup menu
-  4. See a visual representation of their beat-map on the screen, rendered with canvas
-  5. Save their visual beat-map for later reference
+## Usage
 
-## Possible Implementation
+A sample key mapping is provided by default, binding certain keys to certain sounds.  However, you can change the keymapping and the sound for each element on the page.
 
-All but the visual beat representation can be accomplished without the use of HTML5 canvas.  
+### Changing Sound
 
-The key mapping will be based on a data-key attribute on a particular html element.  When users switch to a new mapping, a data-key attribute will be set with the user's preference.  A listener will be placed on that html element to play the selected sound, as well as briefly animate the key being pressed.  Click listeners will also be placed on the button, displaying an options menu where the user can change key binding and sound.
+To change a sound:
+* click the key you would like to change
+* select a sound from the options provided
 
-The beat visualization will be rendered with canvas, generating a 'dot' on the moving screen.  After a brief time without input, a modal will appear asking the user if they would like to save their beat-map, or start a new beat.
+You can sample the sound after clicking by tapping the key.
+
+### Changing Keybind
+
+To change a keybinding:
+* click the key you would like to change
+* click 'bind settings'
+* press any key, and see it selected
+* click 'save binding'
+
+**Note**: multiple sounds can be bound to the same key, allowing for flexible combinations of sounds.
+
+## Under the Hood
+
+### Reusability
+headBanger utilizes React.js in order to reuse and repurpose components throughout the app.  There is only one 'key' component, which contains all the necessary functionality to find, play, and bind the proper sound files.
+
+### Animations
+HTML5 canvas is used in the background of the application in order to provide a firework effect.  The canvas element sits at the highest level of the app, so as to avoid re-rendering.  When an event fires, a sequence of 'cirlce' instances are generated, each carrying knowledge of their velocity, color, and the context in which they are drawn.
+
+### 'Silence'
+During binding, all event listeners turn off for a period of time.  This is accomplished through a 'pause' attribute placed on the window, which is checked for each callback bound to the 'keydown' event.
+
+Originally, this 'silence' was handled in local state and passing to components via props.  However, as props changed, the canvas component would re-render and cause bugs and glitches in the animations.  Therefore, the only way to pass knowledge between components at different levels of the application was to use the window.
