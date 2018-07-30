@@ -186,11 +186,11 @@ kbd {
 }
 
 .active {
-  border-color: #ffc600;
+  border: 1px solid #ffc600;
 }
 
 .active:hover {
-  border-color: #ffc600;
+  border: 1px solid #ffc600;
 }
 
 .profile {
