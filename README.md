@@ -69,14 +69,21 @@ Originally, this 'silence' was handled in local state and passed to components v
 
     componentDidMount () {
       window.pause = true
-      window.addEventListener('keydown',this.makeSelection.bind(this))
+      window.addEventListener('keydown',this.makeSelection)
     }
 
     componentWillUnmount () {
       window.pause = false
-      window.removeEventListener('keydown', this.makeSelection.bind(this))
+      window.removeEventListener('keydown', this.makeSelection)
     }
   
     // ...
   }
 ```
+
+## Future Plans
+
+Going forward, I would like to experiment with the following features:
+* saving presets using `localStorage`
+* audio save/playback
+* audio visualization
