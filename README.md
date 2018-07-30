@@ -32,7 +32,51 @@ headBanger utilizes React.js in order to reuse and repurpose components througho
 ### Animations
 HTML5 canvas is used in the background of the application in order to provide a firework effect.  The canvas element sits at the highest level of the app, so as to avoid re-rendering.  When an event fires, a sequence of 'cirlce' instances are generated, each carrying knowledge of their velocity, color, and the context in which they are drawn.
 
+```javascript
+  class Canvas extends React.Component {
+
+    // ...
+
+    create = (width, height, color) => {
+      const radius = 3 + Math.random() * 8
+
+      const vx = -5 + (Math.random() * 12)
+      const vy = -5 + (Math.random() * 12)
+
+      return new Circle(
+        this.canvas.current,
+        this.context,
+        [width, height],
+        [vx, vy],
+        color,
+        radius
+      )
+    }
+
+    // ...
+  }
+```
+
 ### 'Silence'
 During binding, all event listeners turn off for a period of time.  This is accomplished through a 'pause' attribute placed on the window, which is checked for each callback bound to the 'keydown' event.
 
 Originally, this 'silence' was handled in local state and passed to components via props.  However, as props changed, the canvas component would re-render and cause bugs and glitches in the animations.  Therefore, the only way to pass knowledge between components at different levels of the application was to use the window.
+
+```javascript
+  class BindOption extends React.Component {
+  
+    // ...
+
+    componentDidMount () {
+      window.pause = true
+      window.addEventListener('keydown',this.makeSelection.bind(this))
+    }
+
+    componentWillUnmount () {
+      window.pause = false
+      window.removeEventListener('keydown', this.makeSelection.bind(this))
+    }
+  
+    // ...
+  }
+```
