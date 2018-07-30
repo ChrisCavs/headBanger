@@ -35,4 +35,4 @@ HTML5 canvas is used in the background of the application in order to provide a 
 ### 'Silence'
 During binding, all event listeners turn off for a period of time.  This is accomplished through a 'pause' attribute placed on the window, which is checked for each callback bound to the 'keydown' event.
 
-Originally, this 'silence' was handled in local state and passing to components via props.  However, as props changed, the canvas component would re-render and cause bugs and glitches in the animations.  Therefore, the only way to pass knowledge between components at different levels of the application was to use the window.
+Originally, this 'silence' was handled in local state and passed to components via props.  However, as props changed, the canvas component would re-render and cause bugs and glitches in the animations.  Therefore, the only way to pass knowledge between components at different levels of the application was to use the window.
