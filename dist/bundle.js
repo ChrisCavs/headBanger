@@ -20515,6 +20515,141 @@ exports.default = KeyOptions;
 
 /***/ }),
 
+/***/ "./src/components/modal.jsx":
+/*!**********************************!*\
+  !*** ./src/components/modal.jsx ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Modal = function (_React$Component) {
+  _inherits(Modal, _React$Component);
+
+  function Modal() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, Modal);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Modal.__proto__ || Object.getPrototypeOf(Modal)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      hidden: false
+    }, _this.hideModal = function () {
+      _this.setState({ hidden: true });
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(Modal, [{
+    key: "render",
+    value: function render() {
+      if (this.state.hidden) {
+        return _react2.default.createElement("div", null);
+      }
+
+      return _react2.default.createElement(
+        "div",
+        {
+          className: "modal",
+          onClick: this.hideModal
+        },
+        _react2.default.createElement(
+          "div",
+          { className: "modal-content" },
+          _react2.default.createElement(
+            "h1",
+            { className: "modal-title" },
+            "Instructions"
+          ),
+          _react2.default.createElement(
+            "h2",
+            { className: "modal-subtitle" },
+            "Changing Sounds:"
+          ),
+          _react2.default.createElement(
+            "ul",
+            { className: "modal-bullets" },
+            _react2.default.createElement(
+              "li",
+              null,
+              "Click on the key you would like to change"
+            ),
+            _react2.default.createElement(
+              "li",
+              null,
+              "Select a sound (the current selection is highlighted)"
+            ),
+            _react2.default.createElement(
+              "li",
+              null,
+              "Click anywhere else on the screen to close settings"
+            )
+          ),
+          _react2.default.createElement(
+            "h2",
+            { className: "modal-subtitle" },
+            "Changing Key:"
+          ),
+          _react2.default.createElement(
+            "ul",
+            { className: "modal-bullets" },
+            _react2.default.createElement(
+              "li",
+              null,
+              "Click on the key you would like to change"
+            ),
+            _react2.default.createElement(
+              "li",
+              null,
+              "Click 'bind-settings'"
+            ),
+            _react2.default.createElement(
+              "li",
+              null,
+              "Press any key to select it"
+            ),
+            _react2.default.createElement(
+              "li",
+              null,
+              "Click 'Save Binding'"
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return Modal;
+}(_react2.default.Component);
+
+exports.default = Modal;
+
+/***/ }),
+
 /***/ "./src/components/profile.jsx":
 /*!************************************!*\
   !*** ./src/components/profile.jsx ***!
@@ -20899,6 +21034,10 @@ var _profile = __webpack_require__(/*! ./components/profile */ "./src/components
 
 var _profile2 = _interopRequireDefault(_profile);
 
+var _modal = __webpack_require__(/*! ./components/modal */ "./src/components/modal.jsx");
+
+var _modal2 = _interopRequireDefault(_modal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Root = function Root() {
@@ -20907,7 +21046,8 @@ var Root = function Root() {
     { className: 'root' },
     _react2.default.createElement(_canvas2.default, null),
     _react2.default.createElement(_app2.default, null),
-    _react2.default.createElement(_profile2.default, null)
+    _react2.default.createElement(_profile2.default, null),
+    _react2.default.createElement(_modal2.default, null)
   );
 };
 
