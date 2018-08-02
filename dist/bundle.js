@@ -20094,13 +20094,13 @@ var BindOption = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       window.pause = true;
-      window.addEventListener('keydown', this.makeSelection.bind(this));
+      window.onkeypress = this.makeSelection.bind(this);
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       window.pause = false;
-      window.removeEventListener('keydown', this.makeSelection.bind(this));
+      window.onkeypress = null;
     }
   }, {
     key: 'render',

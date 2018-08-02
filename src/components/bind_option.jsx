@@ -15,12 +15,12 @@ class BindOption extends React.Component {
 
   componentDidMount () {
     window.pause = true
-    window.addEventListener('keydown',this.makeSelection.bind(this))
+    window.onkeypress = this.makeSelection.bind(this)
   }
 
   componentWillUnmount () {
     window.pause = false
-    window.removeEventListener('keydown', this.makeSelection.bind(this))
+    window.onkeypress = null
   }
 
   render() {
