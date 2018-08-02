@@ -69,12 +69,12 @@ Originally, this 'silence' was handled in local state and passed to components v
 
     componentDidMount () {
       window.pause = true
-      window.addEventListener('keydown',this.makeSelection)
+      window.onkeypress = this.makeSelection.bind(this)
     }
 
     componentWillUnmount () {
       window.pause = false
-      window.removeEventListener('keydown', this.makeSelection)
+      window.onkeypress = null
     }
   
     // ...
